@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:54 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 16:37:19 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,25 @@ int	ft_isspace(char c)
 
 void	hit(t_map *tmp, t_raycasting *r, t_all *all, char c)
 {
-	if (tmp && (tmp->i == c || tmp->i == 'D'))
+	(void)all;
+	if (tmp && (tmp->i == c))
 		r->hit = true;
-	else if (tmp->i == 'd')
-	{
-		line_height_calculation(all, r, &all->player);
-		if (all->open_progress > 0.0)
-		{
-			r->perpwalldist += all->open_progress;
-			if (r->perpwalldist > 1)
-				r->perpwalldist = 1;
-			rendering_image(&all->tex.walls[2], all, r->x, 0.6);
-		}
-	}
 }
 
 static void	trim_newline(char *str)
 {
-	int (len) = ft_strlen(str);
+	int	len;
+
+	len = ft_strlen(str);
 	if (len > 0 && str[len - 1] == '\n')
 		str[len - 1] = '\0';
 }
 
 int	walls_tiles(t_all *all, t_texture *tex)
 {
-	int (i) = -1;
+	int	i;
+
+	i = -1;
 	tex->walls = malloc(sizeof(t_image) * 4);
 	if (!tex->walls)
 		return (0);
@@ -66,10 +60,12 @@ int	walls_tiles(t_all *all, t_texture *tex)
 
 void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 {
+	double	corrected_dist;
+
 	r->perpwalldist = (r->sidedisty - r->deltadisty);
 	if (r->side == 0)
 		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	double (corrected_dist) = fmax(r->perpwalldist, 1);
+	corrected_dist = fmax(r->perpwalldist, 1);
 	r->lineheight = (int)(all->window.main_h / corrected_dist);
 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawstart < 0)
@@ -78,8 +74,8 @@ void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 	if (r->drawend >= all->window.main_h)
 		r->drawend = all->window.main_h - 1;
 	if (r->side == 0)
-		r->tex_x = p->y + r->perpwalldist * r->raydiry;
+		r->tex_x = p->y + (r->sidedistx - r->deltadistx) * r->raydiry;
 	else
-		r->tex_x = p->x + r->perpwalldist * r->raydirx;
+		r->tex_x = p->x + (r->sidedisty - r->deltadisty) * r->raydirx;
 	r->tex_x -= floor(r->tex_x);
 }

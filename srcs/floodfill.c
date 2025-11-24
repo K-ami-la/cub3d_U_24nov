@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/19 12:05:34 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	is_invalid_tile(char c)
 {
-	if (c == '0' || c == '1' || c == 'D' || c == 'B'
-		|| c == 'C' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	if (c == '0' || c == '1' || c == 'N'
+		|| c == 'S' || c == 'E' || c == 'W')
 		return (0);
 	return (1);
 }
@@ -30,8 +30,8 @@ static void	floodfill(t_map *player, t_all *all)
 		|| !player->up || !player->down || !player->left
 		|| (player->right && player->x > player->right->x))
 	{
-		ft_printf(2, "Error\ninvalid map\n");
-		exit(((ft_clearall(all)), EXIT_FAILURE));
+		ft_printf(2, "Error\nInvalid map: not closed\n");
+		exit((ft_clearall(all), EXIT_FAILURE));
 	}
 }
 
@@ -64,16 +64,17 @@ static void	get_cam(t_map *curr, t_all *all)
 void	check_close_map(t_map **map, t_all *all)
 {
 	t_map	*col;
+	t_map	*row;
+	int		l;
 
-	t_map *(row) = *map;
-	int (l) = 0;
+	row = *map;
+	l = 0;
 	while (row)
 	{
 		col = row;
 		while (col)
 		{
-			if (col->i == '0' || col->i == 'D'
-				|| col->i == 'C' || col->i == 'B')
+			if (col->i == '0')
 				floodfill(col, all);
 			if (col->i == 'N' || col->i == 'S'
 				|| col->i == 'W' || col->i == 'E')

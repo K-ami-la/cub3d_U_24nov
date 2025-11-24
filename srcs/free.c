@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:35:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/06 10:11:06 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ void	ft_freeinfo(t_info *info)
 
 void	ft_freeplayer(t_player *player)
 {
-	if (player->knife.animation)
-		free(player->knife.animation);
+	(void)player;
 }
 
 void	ft_freetex(t_texture *tex)

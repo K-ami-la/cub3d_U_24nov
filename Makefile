@@ -11,8 +11,6 @@
 # **************************************************************************** #
 
 NAME		= cub3D
-
-BONUS_NAME	= cub3D_bonus
 	
 LFT_NAME	= libft.a
 
@@ -20,11 +18,11 @@ MLX_NAME	= libmlx.a
 
 SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
 get_info.c error_handling.c launcher.c pixel_put.c movement.c tileset.c \
-path_texture.c get_tex.c display_map.c dda.c floor_ceiling.c player.c \
+path_texture.c display_map.c dda.c floor_ceiling.c \
 hooks.c minimap.c mouse.c init.c sprites.c dda_utils.c movement_utils.c \
 get_info_utils.c \
 
-SRCS_B		=
+# SRCS_B		=
 
 INCS		= cub3d.h
 INCS_B		= allb.h
@@ -76,8 +74,6 @@ $(A_MLX):
 $(NAME): $(OFILES) $(A_LFT) $(A_MLX)
 	$(CC) -o $(NAME) $(CFLAGS) $(OPTION) $(OFILES) $(A_LFT) $(A_MLX) $(MLX_FLAGS)
 
-bonus:	$(BONUS_NAME)
-
 $(ODIRS_B):
 	@mkdir -p $(ODIRS_B)
 
@@ -100,5 +96,4 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all bonus fclean clean re test
-
+.PHONY: all fclean clean re test

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/19 12:23:57 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,27 @@ static bool	tile_is_wall(t_map *tmp, int x, int y)
 		if (x == tmp->x && y == tmp->y)
 			break ;
 	}
-	if (tmp && (tmp->i == '1' || tmp->i == 'D'
-			|| tmp->i == 'B' || tmp->i == 'C'))
+	if (tmp && tmp->i == '1')
 		return (true);
 	return (false);
 }
 
 static void	walk(t_player *p, double dirx, double diry)
 {
-	double (old_x) = p->x;
-	double (old_y) = p->y;
-	double (new_x) = old_x + dirx * p->ms;
-	double (new_y) = old_y + diry * p->ms;
+	double	old_x;
+	double	old_y;
+	double	new_x;
+	double	new_y;
+
+	old_x = p->x;
+	old_y = p->y;
+	new_x = old_x + dirx * p->ms;
+	new_y = old_y + diry * p->ms;
 	new_x = get_x(p, old_x, new_x, dirx);
 	new_y = old_y + diry * p->ms;
-	if (diry > 0 && p->h->down && (p->h->down->i == '1'
-			|| p->h->down->i == 'B' || p->h->down->i == 'D'
-			|| p->h->down->i == 'C') && new_y >= p->h->y + 1)
+	if (diry > 0 && p->h->down && p->h->down->i == '1' && new_y >= p->h->y + 1)
 		new_y = old_y;
-	else if (diry < 0 && p->h->up && (p->h->up->i == '1'
-			|| p->h->up->i == 'B' || p->h->up->i == 'D'
-			|| p->h->up->i == 'C') && new_y <= p->h->y)
+	else if (diry < 0 && p->h->up && p->h->up->i == '1' && new_y <= p->h->y)
 		new_y = old_y;
 	if (tile_is_wall(p->h, (int)new_x, (int)new_y))
 	{
@@ -92,23 +92,21 @@ static void	direction(t_player *player, double dirx, double diry)
 {
 	t_map	*new_tile;
 	char	new_tile_i;
+	int		new_tile_x;
+	int		new_tile_y;
 
 	new_tile = NULL;
 	walk(player, dirx, diry);
-	int (new_tile_x) = (int)player->x;
-	int (new_tile_y) = (int)player->y;
+	new_tile_x = (int)player->x;
+	new_tile_y = (int)player->y;
 	if (new_tile_x != (int)player->h->x || new_tile_y != (int)player->h->y)
 	{
 		new_tile = check_height_cases(player, new_tile_x, new_tile_y);
-		if (new_tile && (new_tile->i != '1' && new_tile->i != 'B'
-				&& new_tile->i != 'D' && new_tile->i != 'C'))
+		if (new_tile && new_tile->i != '1')
 		{
-			if (new_tile->i != 'd')
-			{
-				new_tile_i = player->h->i;
-				player->h->i = new_tile->i;
-				new_tile->i = new_tile_i;
-			}
+			new_tile_i = player->h->i;
+			player->h->i = new_tile->i;
+			new_tile->i = new_tile_i;
 			player->h = new_tile;
 		}
 	}
@@ -116,13 +114,16 @@ static void	direction(t_player *player, double dirx, double diry)
 
 int	movement_handling(t_all *all)
 {
-	t_player *(p) = &all->player;
-	double (angle) = 0.05;
-	if (all->movement.move[XK_z])
+	t_player	*p;
+	double		angle;
+
+	p = &all->player;
+	angle = 0.05;
+	if (all->movement.move[XK_w])
 		direction(p, p->dx, p->dy);
 	else if (all->movement.move[XK_s])
 		direction(p, -p->dx, -p->dy);
-	if (all->movement.move[XK_q])
+	if (all->movement.move[XK_a])
 		direction(&all->player, -p->planex, -p->planey);
 	else if (all->movement.move[XK_d])
 		direction(&all->player, p->planex, p->planey);
@@ -132,17 +133,3 @@ int	movement_handling(t_all *all)
 		rotate_player(p, angle);
 	return (1);
 }
-
-// int	movement_handling(t_all *all)
-// {
-// 	t_player *(p) = &all->player;
-// 	if (all->movement.move[XK_w])
-// 		direction(p, p->dx, p->dy);
-// 	else if (all->movement.move[XK_s])
-// 		direction(p, -p->dx, -p->dy);
-// 	if (all->movement.move[XK_a])
-// 		direction(&all->player, -p->planex, -p->planey);
-// 	else if (all->movement.move[XK_d])
-// 		direction(&all->player, p->planex, p->planey);
-// 	return (1);
-// }

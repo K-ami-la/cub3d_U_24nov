@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:51 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/28 11:17:43 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,25 @@ static char	*empty_stringe(char *path)
 	return (path);
 }
 
+static void	check_floor(char *line, t_texture *tex)
+{
+	if (ft_strnstr(line, "floor", ft_strlen(line)))
+	{
+		if (ft_strnstr(line, "white", ft_strlen(line)))
+			tex->nbr_a[0]++;
+		if (ft_strnstr(line, "green", ft_strlen(line)))
+			tex->nbr_a[1]++;
+		if (line[0] == '-' || line[0] == '.')
+			tex->nbr_i[0]++;
+	}
+}
+
 static int	parse_file(char **line, t_texture *tex, char **path)
 {
 	char	*tmp;
 
 	check_floor(*line, tex);
-	check_card(*line, tex);
-	check_knife(*line, tex);
-	check_decor(*line, tex);
-	if (*line[0] == '.')
+	if ((*line)[0] == '.')
 		tex->nbr_image++;
 	tmp = ft_strjoin(*path, *line + 1);
 	if (!tmp)

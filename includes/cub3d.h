@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/19 12:23:42 by mulysse          ###   ########.fr       */
+/*   Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#             */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <math.h>
-# include <time.h>
 # include <sys/time.h>
 # include "libft.h"
 # include "mlx.h"
 # include <X11/keysym.h>
+
 # define TILE_SIZE 64
 
 typedef struct s_map
@@ -59,8 +59,6 @@ typedef struct s_info
 	int		*column;
 	int		line;
 	int		fd;
-	int		fdd;
-	int		box;
 	int		parsing_nbr;
 	char	*map;
 	char	**sp_map;
@@ -81,54 +79,18 @@ typedef struct s_image
 	char	*img_path;
 	int		w;
 	int		h;
-	int		mvscreen_scale;
-	int		obj_screen_x;
-	double	scale;
-	double	mv;
 }	t_image;
-
-typedef struct s_obj
-{
-	double	x;
-	double	y;
-	int		w;
-	int		h;
-	int		status;
-	int		draw_startx;
-	int		draw_endx;
-	int		draw_starty;
-	int		draw_endy;
-	t_map	*m;
-	t_image	img;
-}	t_obj;
-
-typedef struct s_knife
-{
-	int		*animation;
-	int		i;
-	int		lim;
-	bool	aspect;
-	bool	normal;
-	int		frame_delay;
-}	t_knife;
 
 typedef struct s_player
 {
-	double		x;
-	double		y;
-	double		dx;
-	double		dy;
-	double		planex;
-	double		planey;
-	double		mapx;
-	double		mapy;
-	double		tmp_x;
-	double		tmp_y;
-	double		ms;
-	double		rs;
-	t_map		*h;
-	t_obj		access;
-	t_knife		knife;
+	double	x;
+	double	y;
+	double	dx;
+	double	dy;
+	double	planex;
+	double	planey;
+	double	ms;
+	t_map	*h;
 }	t_player;
 
 typedef struct s_mouse
@@ -167,11 +129,7 @@ typedef struct s_raycasting
 	int		stepx;
 	int		stepy;
 	bool	hit;
-	bool	box_hit;
-	double	sidedistx_box;
-	double	sidedisty_box;
 	int		side;
-	int		side_box;
 	int		lineheight;
 	int		drawstart;
 	int		drawend;
@@ -181,7 +139,6 @@ typedef struct s_movement
 {
 	bool	move[65535];
 	int		keycode;
-	bool	i_move[4];
 }	t_movement;
 
 typedef struct s_fail
@@ -195,13 +152,13 @@ typedef struct s_fail
 
 typedef struct s_texture
 {
-	int			*nbr_a;
-	int			*nbr_i;
-	int			nbr_image;
-	char		**path_texture;
-	t_image		***tiles;
-	t_image		*walls;
-	t_fail		fail;
+	int		*nbr_a;
+	int		*nbr_i;
+	int		nbr_image;
+	char	**path_texture;
+	t_image	***tiles;
+	t_image	*walls;
+	t_fail	fail;
 }	t_texture;
 
 typedef struct s_all
@@ -215,33 +172,27 @@ typedef struct s_all
 	t_image			image;
 	t_movement		movement;
 	t_texture		tex;
-	t_obj			*boxes;
-	t_obj			door;
 	t_color			floor;
 	t_color			ceiling;
 	int				i;
 	int				frame;
 	int				step;
 	int				ac;
-	float			vision;
 	char			**av;
 	double			time;
 	double			oldtime;
 	double			zbuffer[1920];
-	double			open_progress;
 	int				df;
 	int				dc;
 }	t_all;
 
 void			rotate_player(t_player *p, double angle);
 void			free_walls(t_texture *tex, t_all *all, int i);
-int				check_ep_doubles(t_info *info);
 int				create_image(t_image *image, t_window *window);
 int				ft_isspace(char c);
 int				walls_tiles(t_all *all, t_texture *tex);
 int				get_tex_mandatory(t_all *all, t_info *info);
-double			get_x(t_player *p, double old_x, double new_x,
-					double dirx);
+double			get_x(t_player *p, double old_x, double new_x, double dirx);
 void			line_height_calculation(t_all *all, t_raycasting *r,
 					t_player *p);
 void			hit(t_map *tmp, t_raycasting *r, t_all *all, char c);
@@ -252,21 +203,11 @@ void			minimap(t_all *all);
 void			raycasting(t_all *all, t_player *p, t_raycasting *r);
 int				hook_handling(t_all *all);
 int				looping(t_all *all);
-int				mouse_move(int x, int y, t_all *all);
-void			update_doors(t_all *all, double dt);
-void			render_3dsprite(t_all *all, t_window *win, t_obj *obj,
-					t_player *p);
-void			render_2dsprite(t_window *win, t_image *weapon);
-void			player_handling(t_all *all);
 void			floor_ceiling_raycasting(t_all *all, t_raycasting *r,
 					t_map *cp, t_player *p);
 void			rendering_image(t_image *tex, t_all *all, int xscreen,
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
-void			check_decor(char *line, t_texture *tex);
-void			check_knife(char *line, t_texture *tex);
-void			check_card(char *line, t_texture *tex);
-void			check_floor(char *line, t_texture *tex);
 int				get_paths(char *file, t_texture *tex);
 int				split_tile(t_texture *tex, t_all *all);
 int				movement_handling(t_all *all);
@@ -275,6 +216,7 @@ unsigned int	get_pixel_color(t_image *image, int x, int y);
 int				launcher(t_all *all);
 int				error_handling(int ac, char **av, t_info *info);
 int				get_map(t_info *info);
+int				check_ep_doubles(t_info *info);
 void			ft_freetex(t_texture *tex);
 void			ft_clearall(t_all *all);
 void			ft_freeplayer(t_player *player);
@@ -288,5 +230,6 @@ void			chain_map_updown(t_map *node, t_info *info,
 int				make_list(t_map **node, t_all *all);
 void			print_map(t_map **head, t_info *info);
 int				map_handling(t_info *info, t_map **map, t_all *all);
-int				main(int ac, char **av);
-#endif //CUB3D
+void			render_floor_ceiling(t_all *all, t_raycasting *r);
+
+#endif

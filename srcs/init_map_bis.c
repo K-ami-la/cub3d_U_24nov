@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/02 10:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,12 @@
 
 static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 {
-	if (node->i == 'N' || node->i == 'W' || node->i == 'S' || node->i == 'E')
+	if (node->i == 'N' || node->i == 'W'
+		|| node->i == 'S' || node->i == 'E')
 	{
 		all->player.h = node;
 		all->player.x = info->i_x;
 		all->player.y = info->i_y;
-		all->player.knife.i = 0;
-		all->player.knife.normal = false;
-		all->player.knife.lim = 0;
-		all->player.knife.aspect = false;
-		all->player.knife.frame_delay = 0;
-	}
-	if (node->i == 'B')
-	{
-		all->boxes[info->box].x = node->x;
-		all->boxes[info->box].y = node->y;
-		all->boxes[info->box].status = 0;
-		all->boxes[info->box++].m = node;
-	}
-	if (node->i == 'D')
-	{
-		all->door.m = node;
-		all->door.status = 0;
 	}
 	return (1);
 }
@@ -55,13 +39,6 @@ static t_map	*ft_newnode(t_info *info, t_all *all)
 	node->left = NULL;
 	node->up = NULL;
 	node->down = NULL;
-	if (node->i == 'C')
-	{
-		all->player.access.status = 0;
-		all->player.access.m = node;
-		all->player.access.x = info->i_x;
-		all->player.access.y = info->i_y;
-	}
 	get_dynamique_info(node, info, all);
 	return (node);
 }

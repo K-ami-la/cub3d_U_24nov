@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 15:42:08 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ void	print_map(t_map **head, t_info *info)
 {
 	t_map	*row;
 	t_map	*col;
+	int		l;
 
 	row = *head;
-	int (l) = 0;
+	l = 0;
 	while (row)
 	{
 		col = row;
@@ -99,7 +100,6 @@ int	map_handling(t_info *info, t_map **map, t_all *all)
 		return (0);
 	if (!init_char(all, info))
 		return (0);
-	info->box = 0;
 	if (!fill_map(info, map, all))
 		return (0);
 	check_close_map(map, all);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tileset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:24:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 12:52:21 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	create_image(t_image *image, t_window *window)
 	image->img = mlx_xpm_file_to_image(window->mlx,
 			image->img_path, &image->w, &image->h);
 	if (!image->img)
-		return (ft_printf(2, "Error\nTexture_path\n"), 0);
+		return (ft_printf(2, "Error\nTexture path invalid\n"), 0);
 	image->addr = mlx_get_data_addr(image->img,
 			&image->bits_per_pixel, &image->line_length, &image->endian);
 	if (!image->addr)
@@ -34,10 +34,12 @@ static int	free_rest(t_texture *tex, t_all *all)
 		{
 			tex->fail.a = all->tex.nbr_a[--(tex->fail.b)];
 			while (--(tex->fail.a) >= 0)
+			{
 				if (mlx_destroy_image(all->window.mlx,
 						tex->tiles[tex->fail.i][tex->fail.j][tex->fail.a].img)
-						< 0)
+					< 0)
 					return (0);
+			}
 			free(tex->tiles[tex->fail.i][tex->fail.j]);
 		}
 		free(tex->tiles[tex->fail.i]);
@@ -53,18 +55,22 @@ static int	free_rest(t_texture *tex, t_all *all)
 static int	free_failedimage(t_texture *tex, t_all *all)
 {
 	while (--(tex->fail.a) >= 0)
+	{
 		if (mlx_destroy_image(all->window.mlx,
 				tex->tiles[tex->fail.i][tex->fail.j][tex->fail.a].img) < 0)
 			return (0);
+	}
 	if (tex->tiles[tex->fail.i][tex->fail.j])
 		free(tex->tiles[tex->fail.i][tex->fail.j]);
 	while (--(tex->fail.j) >= 0)
 	{
 		tex->fail.a = all->tex.nbr_a[--(tex->fail.b)];
 		while (--(tex->fail.a) >= 0)
+		{
 			if (mlx_destroy_image(all->window.mlx,
 					tex->tiles[tex->fail.i][tex->fail.j][tex->fail.a].img) < 0)
 				return (0);
+		}
 		free(tex->tiles[tex->fail.i][tex->fail.j]);
 	}
 	if (tex->tiles[tex->fail.i])
@@ -84,7 +90,7 @@ static int	spliting_anim(t_texture *tex, t_all *all)
 		tex->tiles[tex->fail.i][tex->fail.j][tex->fail.a].img_path
 			= tex->path_texture[++(tex->fail.k)];
 		if (!create_image(&tex->tiles[tex->fail.i][tex->fail.j][tex->fail.a],
-			&all->window))
+				&all->window))
 			return (0);
 	}
 	return (1);
@@ -106,8 +112,10 @@ int	split_tile(t_texture *tex, t_all *all)
 		if (!tex->tiles[tex->fail.i])
 			return (free_failedimage(tex, all));
 		while (++(tex->fail.j) < tex->nbr_i[tex->fail.i])
+		{
 			if (!spliting_anim(tex, all))
 				return (free_failedimage(tex, all));
+		}
 	}
 	return (1);
 }

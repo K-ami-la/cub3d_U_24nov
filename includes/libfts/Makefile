@@ -9,7 +9,6 @@
 #    Updated: 2024/09/20 10:19:13 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 NAME	= libft.a
 
 SRCS	=	ft_strcat.c ft_strchr.c ft_strcmp.c ft_strcpy.c ft_strdup.c \
@@ -46,8 +45,13 @@ $(ODIRS):
 $(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) | $(ODIRS)
 	$(CC) $(CFLAGS) -c -I$(IDIRS) $< -o $@
 
+# ==============================
+#   🔥 RÈGLE CORRIGÉE
+#   Ne reconstruit la libft que si les .o ont changé
+# ==============================
 $(NAME): $(OFILES)
-	ar -rcs $(NAME) $(OFILES)
+	ar rc $(NAME) $(OFILES)
+	@ranlib $(NAME)
 
 clean:
 	rm -f $(OFILES)
@@ -58,4 +62,4 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all so fclean clean re 
+.PHONY: all so fclean clean re

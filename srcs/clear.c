@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/12 12:38:44 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ static void	ft_freeimage(t_all *all, int i)
 {
 	int	j;
 	int	a;
+	int	b;
 
-	int (b) = 0;
-	if (!all->tex.tiles || !*all->tex.tiles)
+	b = 0;
+	if (all->tex.nbr_image == 0)
 		return ;
 	while (++i < all->tex.nbr_image)
 	{
@@ -60,7 +61,9 @@ static void	ft_freeimage(t_all *all, int i)
 
 static void	ft_freewwalls(t_all *all)
 {
-	int (i) = -1;
+	int	i;
+
+	i = -1;
 	if (!all->tex.walls)
 		return ;
 	while (++i < 4)
@@ -71,11 +74,11 @@ static void	ft_freewwalls(t_all *all)
 
 void	ft_clearall(t_all *all)
 {
-	int (i) = -1;
+	int	i;
+
+	i = -1;
 	ft_freemap(&all->map);
 	ft_freeplayer(&all->player);
-	if (all->boxes)
-		free(all->boxes);
 	ft_freeimage(all, i);
 	ft_freewwalls(all);
 	ft_freeinfo(&all->info);
