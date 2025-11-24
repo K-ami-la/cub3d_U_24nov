@@ -22,8 +22,6 @@ path_texture.c display_map.c dda.c floor_ceiling.c \
 hooks.c minimap.c mouse.c init.c sprites.c dda_utils.c movement_utils.c \
 get_info_utils.c \
 
-# SRCS_B		=
-
 INCS		= cub3d.h
 INCS_B		= allb.h
 INCS_LFT	= libft.h
