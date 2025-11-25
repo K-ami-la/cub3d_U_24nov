@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaizatov <kaizatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:27:34 by kaizatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	raycasting(t_all *all, t_player *p, t_raycasting *r)
 		init_dda(r, p);
 		cp = dda_function(r, cp, '1', all);
 		line_height_calculation(all, r, p);
-		all->zbuffer[r->x] = r->perpwalldist;
+		//all->zbuffer[r->x] = r->perpwalldist;
 		render_floor_ceiling(all, r);
 		p_wall(cp, r, &s, all);
 		r->y = r->drawend + 1;

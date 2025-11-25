@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
+#    By: kaizatov <kaizatov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#              #
-#    Updated: 2025/05/23 13:35:28 by ulmagner         ###   ########.fr        #
+#    Updated: 2025/11/25 17:25:10 by kaizatov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MLX_NAME	= libmlx.a
 
 SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
 get_info.c error_handling.c launcher.c pixel_put.c movement.c tileset.c \
-path_texture.c display_map.c dda.c floor_ceiling.c \
+display_map.c dda.c floor_ceiling.c \
 hooks.c minimap.c mouse.c init.c sprites.c dda_utils.c movement_utils.c \
 get_info_utils.c \
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaizatov <kaizatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:21:13 by kaizatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ void			floor_ceiling_raycasting(t_all *all, t_raycasting *r,
 void			rendering_image(t_image *tex, t_all *all, int xscreen,
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
-int				get_paths(char *file, t_texture *tex);
 int				split_tile(t_texture *tex, t_all *all);
 int				movement_handling(t_all *all);
 void			ft_pixel_put(t_window *window, int x, int y, int color);
