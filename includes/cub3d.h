@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaizatov <kaizatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/25 17:21:13 by kaizatov         ###   ########.fr       */
+/*   Updated: 2025/11/26 20:16:36 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <X11/keysym.h>
 
 # define TILE_SIZE 64
+# define TEX_NBR 6
 
 typedef struct s_map
 {
@@ -152,13 +153,13 @@ typedef struct s_fail
 
 typedef struct s_texture
 {
-	int		*nbr_a;
-	int		*nbr_i;
-	int		nbr_image;
-	char	**path_texture;
-	t_image	***tiles;
+	// int		*nbr_a;
+	// int		*nbr_i;
+	// int		nbr_image;
+	// char	**path_texture;
+	// t_image	***tiles;
 	t_image	*walls;
-	t_fail	fail;
+	// t_fail	fail;
 }	t_texture;
 
 typedef struct s_all
@@ -198,17 +199,17 @@ void			line_height_calculation(t_all *all, t_raycasting *r,
 void			hit(t_map *tmp, t_raycasting *r, t_all *all, char c);
 int				init_window(t_all *all);
 int				init_char(t_all *all, t_info *info);
-int				mouse_move(int x, int y, t_all *all);
+// int				mouse_move(int x, int y, t_all *all);
 void			minimap(t_all *all);
 void			raycasting(t_all *all, t_player *p, t_raycasting *r);
 int				hook_handling(t_all *all);
 int				looping(t_all *all);
-void			floor_ceiling_raycasting(t_all *all, t_raycasting *r,
-					t_map *cp, t_player *p);
+// void			floor_ceiling_raycasting(t_all *all, t_raycasting *r,
+// 					t_map *cp, t_player *p);
 void			rendering_image(t_image *tex, t_all *all, int xscreen,
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
-int				split_tile(t_texture *tex, t_all *all);
+// int				split_tile(t_texture *tex, t_all *all);
 int				movement_handling(t_all *all);
 void			ft_pixel_put(t_window *window, int x, int y, int color);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
@@ -216,7 +217,7 @@ int				launcher(t_all *all);
 int				error_handling(int ac, char **av, t_info *info);
 int				get_map(t_info *info);
 int				check_ep_doubles(t_info *info);
-void			ft_freetex(t_texture *tex);
+// void			ft_freetex(t_texture *tex);
 void			ft_clearall(t_all *all);
 void			ft_freeplayer(t_player *player);
 void			ft_freeinfo(t_info *info);

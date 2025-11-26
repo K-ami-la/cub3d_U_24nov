@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:35:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/26 20:14:10 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void	ft_freeplayer(t_player *player)
 	(void)player;
 }
 
-void	ft_freetex(t_texture *tex)
-{
-	if (tex->nbr_i)
-		free(tex->nbr_i);
-	if (tex->nbr_a)
-		free(tex->nbr_a);
-	if (tex->path_texture)
-		ft_tabfree(tex->path_texture);
-}
+// void	ft_freetex(t_texture *tex)
+// {
+// 	if (tex->nbr_i)
+// 		free(tex->nbr_i);
+// 	if (tex->nbr_a)
+// 		free(tex->nbr_a);
+// 	if (tex->path_texture)
+// 		ft_tabfree(tex->path_texture);
+// }

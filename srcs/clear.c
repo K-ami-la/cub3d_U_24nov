@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/26 20:18:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,33 @@ static void	ft_freewindow(t_window *window)
 	}
 }
 
-static void	ft_freeimage(t_all *all, int i)
-{
-	int	j;
-	int	a;
-	int	b;
+// static void	ft_freeimage(t_all *all, int i)
+// {
+// 	int	j;
+// 	int	a;
+// 	int	b;
 
-	b = 0;
-	if (all->tex.nbr_image == 0)
-		return ;
-	while (++i < all->tex.nbr_image)
-	{
-		j = -1;
-		while (++j < all->tex.nbr_i[i])
-		{
-			a = -1;
-			while (++a < all->tex.nbr_a[b])
-				mlx_destroy_image(all->window.mlx,
-					all->tex.tiles[i][j][a].img);
-			b++;
-			free(all->tex.tiles[i][j]);
-		}
-		free(all->tex.tiles[i]);
-	}
-	free(all->tex.tiles);
-}
+// 	b = 0;
+// 	if (all->tex.nbr_image == 0)
+// 		return ;
+// 	while (++i < all->tex.nbr_image)
+// 	{
+// 		j = -1;
+// 		while (++j < all->tex.nbr_i[i])
+// 		{
+// 			a = -1;
+// 			while (++a < all->tex.nbr_a[b])
+// 				mlx_destroy_image(all->window.mlx,
+// 					all->tex.tiles[i][j][a].img);
+// 			b++;
+// 			free(all->tex.tiles[i][j]);
+// 		}
+// 		free(all->tex.tiles[i]);
+// 	}
+// 	free(all->tex.tiles);
+// }
 
-static void	ft_freewwalls(t_all *all)
+static void	ft_freewalls(t_all *all)
 {
 	int	i;
 
@@ -74,15 +74,15 @@ static void	ft_freewwalls(t_all *all)
 
 void	ft_clearall(t_all *all)
 {
-	int	i;
+	// int	i;
 
-	i = -1;
+	// i = -1;
 	ft_freemap(&all->map);
 	ft_freeplayer(&all->player);
-	ft_freeimage(all, i);
-	ft_freewwalls(all);
+	// ft_freeimage(all, i);
+	ft_freewalls(all);
 	ft_freeinfo(&all->info);
-	ft_freetex(&all->tex);
+	// ft_freetex(&all->tex);
 	ft_freewindow(&all->window);
 	if (all->info.fd != -1)
 		close(all->info.fd);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/26 15:52:46 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_map(t_info *info)
 		i = -1;
 		while (info->gnl[++i])
 		{
-			if (!ft_isstrchr("01NSEWD \n", info->gnl[i]))
+			if (!ft_isstrchr("01NSEW \n", info->gnl[i]))
 				return (ft_printf(2, "Error\nInvalid character in map\n"), 0);
 		}
 		if (info->gnl[0] != '\n')

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/11/26 20:13:41 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	launcher(t_all *all)
 		return (0);
 	if (!walls_tiles(all, &all->tex))
 		return (0);
-	if (!split_tile(&all->tex, all))
-		return (0);
+	// if (!split_tile(&all->tex, all))
+	// 	return (0);
 	if (!hook_handling(all))
 		return (0);
 	return (1);
