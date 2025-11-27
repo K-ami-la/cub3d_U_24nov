@@ -58,24 +58,53 @@ int	walls_tiles(t_all *all, t_texture *tex)
 	return (1);
 }
 
+// void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
+// {
+// 	double	corrected_dist;
+
+// 	r->perpwalldist = (r->sidedisty - r->deltadisty);
+// 	if (r->side == 0)
+// 		r->perpwalldist = (r->sidedistx - r->deltadistx);
+// 	corrected_dist = fmax(r->perpwalldist, 1);
+// 	r->lineheight = (int)(all->window.main_h / corrected_dist);
+// 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
+// 	if (r->drawstart < 0)
+// 		r->drawstart = 0;
+// 	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
+// 	if (r->drawend >= all->window.main_h)
+// 		r->drawend = all->window.main_h - 1;
+// 	if (r->side == 0)
+// 		r->tex_x = p->y + (r->sidedistx - r->deltadistx) * r->raydiry;
+// 	else
+// 		r->tex_x = p->x + (r->sidedisty - r->deltadisty) * r->raydirx;
+// 	r->tex_x -= floor(r->tex_x);
+// }
 void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 {
-	double	corrected_dist;
-
-	r->perpwalldist = (r->sidedisty - r->deltadisty);
 	if (r->side == 0)
-		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	corrected_dist = fmax(r->perpwalldist, 1);
-	r->lineheight = (int)(all->window.main_h / corrected_dist);
+		r->perpwalldist = r->sidedistx - r->deltadistx;
+	else
+		r->perpwalldist = r->sidedisty - r->deltadisty;
+
+	if (r->perpwalldist < 0.1)
+		r->perpwalldist = 0.1;
+
+	r->lineheight = (int)(all->window.main_h / r->perpwalldist);
+
 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawstart < 0)
 		r->drawstart = 0;
+
 	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawend >= all->window.main_h)
 		r->drawend = all->window.main_h - 1;
+
+	double wall_x;
 	if (r->side == 0)
-		r->tex_x = p->y + (r->sidedistx - r->deltadistx) * r->raydiry;
+		wall_x = p->y + r->perpwalldist * r->raydiry;
 	else
-		r->tex_x = p->x + (r->sidedisty - r->deltadisty) * r->raydirx;
-	r->tex_x -= floor(r->tex_x);
+		wall_x = p->x + r->perpwalldist * r->raydirx;
+
+	wall_x -= floor(wall_x);
+	r->tex_x = wall_x;
 }
