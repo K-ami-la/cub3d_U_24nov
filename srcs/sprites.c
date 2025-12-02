@@ -50,6 +50,7 @@ int *params)
 	}
 }
 
+//Elle prend la texture du mur et sélectionne la colonne de pixels correcte dans la texture (tex_x).
 void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 {
 	int				params[4];

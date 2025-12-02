@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:54 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/22 20:00:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/12/01 20:00:00 by kaizatov        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ int	ft_isspace(char c)
 		|| c == '\v' || c == '\f' || c == '\r');
 }
 
-void	hit(t_map *tmp, t_raycasting *r, t_all *all, char c)
+//i is the wall
+//map_cell can be null if we exit the map
+void	hit(t_map *map_cell, t_raycasting *r, char c)
 {
-	(void)all;
-	if (tmp && (tmp->i == c))
+	if (map_cell && (map_cell->i == c))
 		r->hit = true;
 }
 
@@ -58,32 +59,44 @@ int	walls_tiles(t_all *all, t_texture *tex)
 	return (1);
 }
 
+//!!!: tex_x représente la position horizontale où le rayon touche le mur, exprimée en valeur normalisée entre 0 et 1.
+//drawstart : ou la ligne de pixelc commence a etre dessiné à partir du haut et drawend : ou la ligne se termine en bas
+
+//calculer la hauteur de la ligne a dessiner
+
+// On calcule la distance perpendiculaire au mur (perpwalldist).
+// On déduit la hauteur du mur sur l’écran (lineheight).
+// On définit les pixels de début et de fin (drawstart, drawend).
+// On calcule où sur la texture frapper le mur (tex_x).
+//perpwalldist : distance perpendiculaire du joueur au mur
+
+//all->window.main_h : accède à la hauteur de la fenêtre
+//wall_x -= floor(wall_x);  car on a besoin d'une valeur decimale
+//...valeur comprise entre 0.0 et 0.1 car floor() donne tjrs un entier
+//...ex floor()= 10 et wall=10.73  donc wall=0.73
+//... dans #include <math.h>
+
 void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 {
+	double	wall_x;
+
 	if (r->side == 0)
 		r->perpwalldist = r->sidedistx - r->deltadistx;
 	else
 		r->perpwalldist = r->sidedisty - r->deltadisty;
-
 	if (r->perpwalldist < 0.1)
 		r->perpwalldist = 0.7;
-
 	r->lineheight = (int)(all->window.main_h / r->perpwalldist);
-
 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawstart < 0)
 		r->drawstart = 0;
-
 	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawend >= all->window.main_h)
 		r->drawend = all->window.main_h - 1;
-
-	double wall_x;
 	if (r->side == 0)
 		wall_x = p->y + r->perpwalldist * r->raydiry;
 	else
 		wall_x = p->x + r->perpwalldist * r->raydirx;
-
 	wall_x -= floor(wall_x);
 	r->tex_x = wall_x;
 }

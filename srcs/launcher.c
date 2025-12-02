@@ -23,8 +23,8 @@ static double	get_current_time(void)
 static int	engine_game(t_all *all)
 {
 	movement_handling(all);
-	if (all->movement.move[XK_m])
-		minimap(all);
+	// if (all->movement.move[XK_m])
+	// 	minimap(all);
 	mlx_put_image_to_window(all->window.mlx, all->window.main,
 		all->window.image.img, 0, 0);
 	return (1);
@@ -61,8 +61,6 @@ int	launcher(t_all *all)
 		return (0);
 	if (!walls_tiles(all, &all->tex))
 		return (0);
-	// if (!split_tile(&all->tex, all))
-	// 	return (0);
 	if (!hook_handling(all))
 		return (0);
 	return (1);

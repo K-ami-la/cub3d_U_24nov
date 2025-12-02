@@ -74,15 +74,10 @@ static void	ft_freewalls(t_all *all)
 
 void	ft_clearall(t_all *all)
 {
-	// int	i;
-
-	// i = -1;
 	ft_freemap(&all->map);
 	ft_freeplayer(&all->player);
-	// ft_freeimage(all, i);
 	ft_freewalls(all);
 	ft_freeinfo(&all->info);
-	// ft_freetex(&all->tex);
 	ft_freewindow(&all->window);
 	if (all->info.fd != -1)
 		close(all->info.fd);
