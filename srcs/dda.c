@@ -14,15 +14,16 @@
 
 //digital differential analyzer
 //dx = cos(angle); dy = sin(angle)
-//Wolfenstein -> systeme de coordonnées des écrans différent
+//Wolfenstein ->  different screen coordinate system
 //ray tracing = like ray casting but with reflection and shadow
 //planX = -dy * FOV ; planY =  dx * FOV
-//deltadistX = distance que le rayon parcourt pour passer d’une ligne verticale à la suivante
-//fabs: la valeur doit etre positive
-//mapx est un int = indice de la map
-//division par 0 = comportement indéfini
+//deltadistX=distance travelled by the ray from one side of the cell to the ..
+//fabs: the value should be positive
+//mapx is an int = map index
+//division par 0 = undefined behaviour
+//raydirx=0 the ray doesn't move horizantaly, but strictly vertically
 //1e30 = 1 × 10^30
-//pour connaitre la distance que le rayon doit parcourir dans une case il faut diviser 1.0 (case) / rayon
+//to know the distance travelled by the ray in one cell= 1.0 (case) / rayon
 static void	setup_ray_direction(t_player *p, t_raycasting *r, int w)
 {
 	r->camerax = 2.0 * r->x / (double)w - 1.0;
@@ -40,11 +41,11 @@ static void	setup_ray_direction(t_player *p, t_raycasting *r, int w)
 		r->deltadisty = fabs(1.0 / r->raydiry);
 }
 
-//setup the stepx= avancer vers gauche ou droite; stepy avancer vers haut ou bas.
-//r->sidedistx = (p->x - r->mapx) * r->deltadistx; : x - map * largeur d une case
-//on rajoute le 1.0 quand c est positif pour atteindre le bord
+//setup the stepx= moves left or right; stepy= moves up or down
+//r->sidedistx = (p->x - r->mapx) * r->deltadistx
+//we add 1.0 to touch the bord
 //site : lodev raycasting 
-//!!!sidedist : distance depuis le joueur jusq prochain côé touché
+//!sidedist =distance from the player to the next side
 static void	setup_dda_parameters(t_raycasting *r, t_player *p)
 {
 	if (r->raydirx < 0)
@@ -68,12 +69,10 @@ static void	setup_dda_parameters(t_raycasting *r, t_player *p)
 		r->sidedisty = (r->mapy + 1.0 - p->y) * r->deltadisty;
 	}
 }
-//!!!retourn la case ou le rayon a frappé???
-//la fonction retourne un pointeur vers la cellule de la grille que le rayon a frappé?
-//la cellule ou le rayon commence : t_map *current_cell
-//tant que le rayon n'a pas frappé de mur et le cellule est valide
-//r->side = 0; on note que le rayon a touche un cote verticale side = 0
-//if (current_cell) : on verifie si la cellule actuelle a touché un mur, si oui hit=1
+//goes until there is no wall
+//as long as there is no wall and the cell is valid
+//r->side = 0; = vertical side
+
 static t_map	*dda_function(t_raycasting *r, t_map *current_cell, char c)
 {
 	while (!r->hit && current_cell)
@@ -96,23 +95,23 @@ static t_map	*dda_function(t_raycasting *r, t_map *current_cell, char c)
 				current_cell = current_cell->up;
 			r->side = 1;
 		}
-		if (current_cell) 
+		if (current_cell)
 			hit(current_cell, r, c);
 	}
 	return (current_cell);
 }
-
-//fct pour determiner quel mur dessiner et avec quelle structure puis appelle le rendu
-//int * s pointe vrs un entier qui servira à choisir la texture du mur
-//map_cell->i != '1' la cellule n'est pas un mur. on met *s par defaut(0)
+//fct that determines which texture
+//int *s = pointer to the texture
+//map_cell->i != '1' if the cell is not a wall. *s = 0 by default
 //3=Est; 2=West; 1=North; 0=South
 //side=0 (vertical)
-//rendering_image(&all->tex.walls[*s], all, r->x, 1.0); dessiner la colonne en pixels
-//all->tex.walls → c’est un tableau de textures de murs.
-//*s → l’index de la texture à utiliser (0 à 3 selon la face du mur).
-//r->x : la colonne actuelle
-//1.0 facteur d'échelle >> pas de zoom pas de reduction ici donc
-static void	select_wall_texture(t_map *map_cell, t_raycasting *r, int *s, t_all *all)
+//rendering_image(&all->tex.walls[*s], all, r->x, 1.0); draws pixel colon
+//all->tex.walls → array of wall textures
+//r->x : cuurent colone
+//1.0 scale factor > no zoom in /out
+
+static void	select_wall_texture(t_map *map_cell, t_raycasting *r, int *s,
+	t_all *all)
 {
 	if (!map_cell || map_cell->i != '1')
 	{
@@ -136,8 +135,11 @@ static void	select_wall_texture(t_map *map_cell, t_raycasting *r, int *s, t_all 
 	rendering_image(&all->tex.walls[*s], all, r->x, 1.0);
 }
 
-//w = all->window.main_w; on recupère la largeur de la fenêtre
-// current_pos = dda_function(r, current_pos, '1'); -> on cherche un mur
+//w = all->window.main_w; the width of the window
+//s = wall texture
+// current_pos = dda_function(r, current_pos, '1')
+//... -> we are searching the wall
+// dda_function(r, current_pos, '1'); (to pass the c = 1 = is a wall)
 void	raycasting(t_all *all, t_player *p, t_raycasting *r)
 {
 	int		w;

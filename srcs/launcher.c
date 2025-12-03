@@ -23,8 +23,6 @@ static double	get_current_time(void)
 static int	engine_game(t_all *all)
 {
 	movement_handling(all);
-	// if (all->movement.move[XK_m])
-	// 	minimap(all);
 	mlx_put_image_to_window(all->window.mlx, all->window.main,
 		all->window.image.img, 0, 0);
 	return (1);

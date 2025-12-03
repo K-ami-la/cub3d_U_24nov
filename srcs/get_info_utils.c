@@ -12,6 +12,13 @@
 
 #include "cub3d.h"
 
+//parses a texture line(NO,SO,WE,EA).
+//checks if the line beginns with the right word(ex.NO)
+//extracts the path and stock it in the "path"
+//incrmentation of the counter parsing_nbr (1=success)
+//...(0)malloc error, 2=not the right line
+//ex.for the line NO ./textures/north.xpm
+//...extracts ./textures/north.xpm
 int	parse_texture(t_info *info, char **path, const char *id)
 {
 	int	i;
@@ -31,6 +38,11 @@ int	parse_texture(t_info *info, char **path, const char *id)
 	return (1);
 }
 
+//cuts the line in three elemnts RGB
+//checks if the line beginns with F and C
+//checks that the line contains only, commas, numbers and sapces
+//split the line according to the ","
+//checks that there a strictly 3 elements
 char	**color_split(t_info *info, char id)
 {
 	char	**split;
@@ -59,7 +71,14 @@ char	**color_split(t_info *info, char id)
 	return (split);
 }
 
-static int	process_parsing_loop(t_info *info, t_all *all, int *i)
+//main loop that reads the file line by line
+//...to parse the textures and colors
+//reads esach line with get_next_line
+//ignores the (\n)
+//calls check_duplicates to parse each line
+//stops when all infos are found (parsing_nbr == TEX_NBR)
+//return(1)=success, (0)=error
+int	process_parsing_loop(t_info *info, t_all *all, int *i)
 {
 	while (info->gnl != NULL)
 	{
@@ -77,22 +96,5 @@ static int	process_parsing_loop(t_info *info, t_all *all, int *i)
 		free(info->gnl);
 		info->gnl = ft_get_next_line(info->fd);
 	}
-	return (1);
-}
-
-int	get_tex_mandatory(t_all *all, t_info *info)
-{
-	int	i;
-
-	info->gnl = ft_get_next_line(info->fd);
-	if (!info->gnl)
-		return (ft_printf(2, "Error\nplan empty\n"), 0);
-	i = 0;
-	if (!process_parsing_loop(info, all, &i))
-		return (0);
-	if (i > TEX_NBR)
-		return (ft_printf(2, "Error\nToo much information\n"), 0);
-	if (info->parsing_nbr < TEX_NBR)
-		return (ft_printf(2, "Error\nSomething's missing\n"), 0);
 	return (1);
 }

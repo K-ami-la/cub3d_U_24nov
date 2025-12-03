@@ -12,6 +12,13 @@
 
 #include "cub3d.h"
 
+//validates and converts the RGB values
+//trims the spaces ans newlines of each element
+//converts the strings in int with ft_atoi
+//check that each value is between 0 and 255
+//stocks the values in r g and b
+//returns 1 (valid) and 0 (not valid)
+//example: "220, "100é, "0" -> r=220, g=100, b=0
 static int	validate_rgb(char **split, int *r, int *g, int *b)
 {
 	char	*s0;
@@ -34,6 +41,14 @@ static int	validate_rgb(char **split, int *r, int *g, int *b)
 	return (1);
 }
 
+//parses a complete line of colors(Floor or Ceiling)
+//checks if the line beginns with F or C
+//calls the color_split to cut the values
+//call validate_rgb to validate and convert
+//stocks the RGB values in the structure "color"
+//incrementation of parsing_nbr
+//returns 1 success and 0 error, 2 not the good line
+//Example F 200, 100, 0 > color->r=220; color->g=100, color->b=0
 int	parse_color(t_info *info, t_color *color, const char *id)
 {
 	int		i;
@@ -60,7 +75,12 @@ int	parse_color(t_info *info, t_color *color, const char *id)
 	return (1);
 }
 
-static int	try_parse_tex(t_info *info, char **tex[4], char *id[6], int i)
+//tries to parse the texture if not already defined
+//checks if "i" is a texture (0-3 for NO/SO/WE/EA)
+//checks if this texxture wasn't already defined
+//calls the parse_texture to extract the path
+//return 1 success, 0 error, 2 not applicable
+int	try_parse_tex(t_info *info, char **tex[4], char *id[6], int i)
 {
 	int	ret;
 
@@ -75,7 +95,12 @@ static int	try_parse_tex(t_info *info, char **tex[4], char *id[6], int i)
 	return (2);
 }
 
-static int	try_parse_col(t_info *info, t_all *all, char *id[6], int i)
+//parses a color if not defined
+//checks if this colors wasnt alreadu defined (flags df ans dc)
+//calls the parse_color to exctract the values RGB
+//activates the corresponding flag 
+//returns 1 success, 0 error, 2 not applicable
+int	try_parse_col(t_info *info, t_all *all, char *id[6], int i)
 {
 	t_color	*col[2];
 	int		*flags[2];
@@ -94,34 +119,4 @@ static int	try_parse_col(t_info *info, t_all *all, char *id[6], int i)
 			return (ft_printf(2, "Error\nColor range\n"), 0);
 	}
 	return (2);
-}
-
-int	check_duplicates(t_info *info, t_all *all, int i)
-{
-	char	*id[6];
-	char	**tex[4];
-	int		ret;
-
-	(void)i;
-	id[0] = "NO";
-	id[1] = "SO";
-	id[2] = "WE";
-	id[3] = "EA";
-	id[4] = "F";
-	id[5] = "C";
-	tex[0] = &info->npath;
-	tex[1] = &info->spath;
-	tex[2] = &info->wpath;
-	tex[3] = &info->epath;
-	i = -1;
-	while (++i < 6)
-	{
-		ret = try_parse_tex(info, tex, id, i);
-		if (ret != 2)
-			return (ret);
-		ret = try_parse_col(info, all, id, i);
-		if (ret != 2)
-			return (ret);
-	}
-	return (1);
 }

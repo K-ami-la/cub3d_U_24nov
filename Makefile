@@ -20,7 +20,7 @@ SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
 get_info.c error_handling.c launcher.c pixel_put.c movement.c tileset.c \
 display_map.c dda.c floor_ceiling.c \
 hooks.c mouse.c init.c sprites.c dda_utils.c movement_utils.c \
-get_info_utils.c get_info_utils_two.c \
+get_info_utils.c get_info_utils_two.c get_info_utils_three.c \
 
 INCS		= cub3d.h
 INCS_B		= allb.h

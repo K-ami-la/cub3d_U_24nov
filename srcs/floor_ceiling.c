@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   floor_ceiling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kaizatov <kaizatov@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 11:34:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/11/23 23:00:00 by ulmagner         ###   ########.fr       */
+/*   Created: 2025-12-02 21:33:14 by kaizatov          #+#    #+#             */
+/*   Updated: 2025-12-02 21:33:14 by kaizatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-//deux varibales pour stocker les couleurs au format 0xRRGGBB
-//...et un compteur pour les pixels verticaux
-//clor_ceiling : on converit les composants R GB (0-255) en une seuele valeur 13 bits
-//while(y < r->drawstart on dessine le plafond du haut de l'ecran jusq debut du mur (drawstart))
-//ft_pixel_put : on dessine un pixel à chaque colonne
-// y : y= 0 première ligne, y = 1 deuxième ligne. partant du haut
+//two varibales to store colors in 0xRRGGBB format
+//...and a counter for the vertical pixels
+//color_ceiling : converts the components R G B (0-255)
+//... into a single 13 bit value (for the minilbx)
+//while(y < r->drawstart) draw the ceiling
+//... from the top to the start of the wall (drawstart))
+//ft_pixel_put : draws one pixel in each column
+// y : y= 0 first colon, y = 1  second colon. from the top
+//while(y < all-> window.main_h). we start from the drawend (end of the wall)
+//...until the end of the screen
 void	render_floor_ceiling(t_all *all, t_raycasting *r)
 {
 	unsigned int	color_floor;

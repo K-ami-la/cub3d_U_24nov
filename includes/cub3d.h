@@ -229,5 +229,9 @@ int				make_list(t_map **node, t_all *all);
 void			print_map(t_map **head, t_info *info);
 int				map_handling(t_info *info, t_map **map, t_all *all);
 void			render_floor_ceiling(t_all *all, t_raycasting *r);
-
+void			init_arrays(char *id[6], char ***tex, t_info *info);
+int				try_parse_tex(t_info *info, char **tex[4], char *id[6], int i);
+int				try_parse_col(t_info *info, t_all *all, char *id[6], int i);
+// int				parse_color(t_info *info, t_color *color, const char *id);
+int				process_parsing_loop(t_info *info, t_all *all, int *i);
 #endif

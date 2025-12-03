@@ -59,21 +59,14 @@ int	walls_tiles(t_all *all, t_texture *tex)
 	return (1);
 }
 
-//!!!: tex_x représente la position horizontale où le rayon touche le mur, exprimée en valeur normalisée entre 0 et 1.
-//drawstart : ou la ligne de pixelc commence a etre dessiné à partir du haut et drawend : ou la ligne se termine en bas
-
-//calculer la hauteur de la ligne a dessiner
-
-// On calcule la distance perpendiculaire au mur (perpwalldist).
-// On déduit la hauteur du mur sur l’écran (lineheight).
-// On définit les pixels de début et de fin (drawstart, drawend).
-// On calcule où sur la texture frapper le mur (tex_x).
-//perpwalldist : distance perpendiculaire du joueur au mur
-
-//all->window.main_h : accède à la hauteur de la fenêtre
-//wall_x -= floor(wall_x);  car on a besoin d'une valeur decimale
-//...valeur comprise entre 0.0 et 0.1 car floor() donne tjrs un entier
-//...ex floor()= 10 et wall=10.73  donc wall=0.73
+//the fct calculates the line to be displayed
+//!!!: tex_x position where the ray touches the wall from 0 t 1
+//calculates "perpwalldist" the perpendicular distance to the wall
+//lineheight)
+// drawstart, drawend
+//all->window.main_h : height window
+//wall_x -= floor(wall_x);  cause we need decimal value from 0 to 1
+//...ex wall=10.73  floor(wall)= 10. 10.73 - 10 = 0.73
 //... dans #include <math.h>
 
 void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)

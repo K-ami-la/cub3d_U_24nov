@@ -50,7 +50,16 @@ int *params)
 	}
 }
 
-//Elle prend la texture du mur et sélectionne la colonne de pixels correcte dans la texture (tex_x).
+//takes the wall texture and selects the pixel colon according to the tex_x
+//t_image  *tex = texture; int xscreen = column of the screen
+//double scale = to adjust the image
+//r = &all->ray; = curent ray
+//tex_x = horizontal position in the texture of the ray(from 0 to 1)
+//if negative we ignore
+//params[0] cordinates of the texture
+//parm[1] the start position of th vertical line
+//parm[2] the end of the column
+//param[3] hight of the column
 void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 {
 	int				params[4];
